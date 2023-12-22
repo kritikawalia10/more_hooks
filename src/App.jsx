@@ -1,6 +1,6 @@
 import './App.css'
 import Posts from './Posts'
-import React, { useState, useReducer} from 'react';
+import React, { useState, useReducer, useRef} from 'react';
 
 
 export const Action_Type = {
@@ -10,6 +10,7 @@ export const Action_Type = {
 function App() {
   const [state, dispatch] = useReducer(reducer, []);
   const [title, setTitle] = useState("");
+  const inputRef = useRef();
  
 
   function reducer(posts, action){
@@ -26,6 +27,10 @@ function App() {
     }
   }
 
+  function highlight(){
+    inputRef.current.focus();
+  }
+
 
   function handleSubmit(e){
     e.preventDefault();
@@ -38,7 +43,7 @@ function App() {
     <>
       <div>
         <form onSubmit={handleSubmit} >
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+          <input ref= {inputRef} type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
 
         </form>
         {state.map((post)=>(
